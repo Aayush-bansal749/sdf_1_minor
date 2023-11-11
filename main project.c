@@ -1,9 +1,6 @@
 #include<stdio.h>
-
 int accounts=0;
-
 int start=0;
-
 struct profile{
         char name[50];
         char address[100];
@@ -15,7 +12,6 @@ struct profile{
         char password[50];
         int balance;
     }user[100];
-
 int balancing()
  {
     for(int i=0;i<100;i++)
@@ -24,12 +20,10 @@ int balancing()
     }
     return 1;
  }
-
 void printprofile(int x)
 {
      printf("\nname=%s\naccount number=%d\nbalance=%d\naddress=%s\nmail=%s\ndob=%s\nphone=%d\naadhar=%d\n",user[x].name,x,user[x].balance,user[x].address,user[x].mail,user[x].dob,user[x].phone,user[x].aadhar);
 }
-
 int login()
 {
     int x;
@@ -37,7 +31,6 @@ int login()
     scanf("%d",&x);
     return x;
 }
-
 int menu()
 {
     int x;
@@ -45,17 +38,14 @@ int menu()
     scanf("%d",&x);
     return x;
 }
-
 int main()
 {
     if(start==0)
     {
         start=balancing();
     }
-
     int upin,me,numb;
     upin=login();
-
     switch(upin)
     {
         case 0:
@@ -82,11 +72,9 @@ int main()
            printprofile(v);
            main();
            break;
-
         }
         case 1:
         {
-
             printf("log in\n");
             printf("enter account number\n");
             scanf("%d",&numb);
@@ -94,7 +82,6 @@ int main()
             char h[50],ch;
             int i;
             for(i=0;i<50;i++)
-
             {
                 ch=getch();
                 if(ch==13)
@@ -102,7 +89,6 @@ int main()
                 h[i]=ch;
                 ch='*';
                 printf("%c",ch);
-
             }
             h[i]='\0';
             int k=0,j;
@@ -130,10 +116,7 @@ int main()
                 printf("try again");
                 main();
             }
-
-
     }
-
     if(me==9)
     {
 notout:
@@ -159,7 +142,6 @@ notout:
                         printf("not enough funds");
                     }
                     goto notout;
-
                 }
             case 2:
                 {
@@ -181,7 +163,6 @@ notout:
                     {
                         goto notout;
                     }
-
                 }
             case 3:
                 {
@@ -194,15 +175,8 @@ notout:
                 {
                     main();
                 }
-
-
-
         }
         }
-
-
-
     }
     main();
-
 }
