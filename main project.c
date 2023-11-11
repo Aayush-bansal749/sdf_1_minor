@@ -1,6 +1,9 @@
-// account to account
 #include<stdio.h>
-int r=0;
+
+int accounts=0;
+
+int start=0;
+
 struct profile{
         char name[50];
         char address[100];
@@ -10,31 +13,55 @@ struct profile{
         int account_no;
         int aadhar;
         char password[50];
-
+        int balance;
     }user[100];
+
+int balancing()
+ {
+    for(int i=0;i<100;i++)
+    {
+        user[i].balance=0;
+    }
+    return 1;
+ }
 
 void printprofile(int x)
 {
-     printf("name=%s\naccount number=%d\naddress=%s\nmail=%s\ndob=%s\nphone=%d\naadhar=%d\n",user[x].name,x,user[x].address,user[x].mail,user[x].dob,user[x].phone,user[x].aadhar);
+     printf("\nname=%s\naccount number=%d\nbalance=%d\naddress=%s\nmail=%s\ndob=%s\nphone=%d\naadhar=%d\n",user[x].name,x,user[x].balance,user[x].address,user[x].mail,user[x].dob,user[x].phone,user[x].aadhar);
 }
+
 int login()
 {
     int x;
-    printf("press 0 to sign up and 1 to log in\n");
+    printf("\npress\n0 to sign up\n1 to log in\n");
     scanf("%d",&x);
     return x;
 }
-int main()
+
+int menu()
 {
     int x;
-    x=login();
+    printf("\npress\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to withdraw funds\n5 to logout");
+    scanf("%d",&x);
+    return x;
+}
 
-    switch(x)
+int main()
+{
+    if(start==0)
+    {
+        start=balancing();
+    }
+
+    int upin,me,numb;
+    upin=login();
+
+    switch(upin)
     {
         case 0:
         {
-            r++;
-            int v=r-1;
+            accounts++;
+            int v=accounts-1;
            printf("sign in\n");
            printf("enter name\n");
            gets(user[v].name);
@@ -59,10 +86,10 @@ int main()
         }
         case 1:
         {
-            int e;
+
             printf("log in\n");
             printf("enter account number\n");
-            scanf("%d",&e);
+            scanf("%d",&numb);
             printf("enter password\n");
             char h[50],ch;
             int i;
@@ -81,15 +108,20 @@ int main()
             int k=0,j;
             for(j=0;j<i;j++)
             {
-                if(h[j]==user[e].password[j])
+                if(h[j]==user[numb].password[j])
                 {
                     k++;
                 }
             }
             if(k==i)
             {
-                printprofile(e);
-
+                printprofile(numb);
+                me=9;
+            }
+            else
+            {
+                printf("wrong password");
+                main();
             }
             break;
         }
@@ -98,8 +130,79 @@ int main()
                 printf("try again");
                 main();
             }
-            
+
 
     }
+
+    if(me==9)
+    {
+notout:
+        {
+        int u,f,amount;
+        u=menu();
+        switch (u)
+        {
+            case 1:
+                {
+                    printf("enter account number to transfer fund to");
+                    scanf("%d",&f);
+                    printf("enter amount to be transfered");
+                    scanf("%d",&amount);
+                    if(user[numb].balance-amount>0)
+                    {
+                        user[numb].balance-=amount;
+                        user[f].balance+=amount;
+                        printf("transfer successful");
+                    }
+                    else
+                    {
+                        printf("not enough funds");
+                    }
+                    goto notout;
+
+                }
+            case 2:
+                {
+                    printf("\nenter amount of loan required");
+                    scanf("%d",&amount);
+                    int years;
+                    printf("\nenter number of years for the repayement of loan");
+                    scanf("%d",&years);
+                    printf("\ninterest rate is 12% per annum\ntotal interest is %d",12/100*amount*years);
+                    printf("are you sure?(y/n)");
+                    char sure;
+                    scanf("%c",&sure);
+                    if(sure=='y')
+                    {
+                        user[numb].balance+=amount;
+                        printf("total ammount of repayment is %d",amount+amount*12*years/100);
+                    }
+                    else
+                    {
+                        goto notout;
+                    }
+
+                }
+            case 3:
+                {
+                    printf("enter amount to be deposited");
+                    scanf("%d",&amount);
+                    user[numb].balance+=amount;
+                    goto notout;
+                }
+            case 5:
+                {
+                    main();
+                }
+
+
+
+        }
+        }
+
+
+
+    }
+    main();
 
 }
