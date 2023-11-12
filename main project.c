@@ -2,6 +2,7 @@
 #include<string.h>
 #include<math.h>
 #include<conio.h>
+
 int accounts=0;
 
 int start=0;
@@ -15,6 +16,7 @@ struct profile{
         int aadhar;
         char password[50];
         int balance;
+        int loan;
     }user[100];
 
 int balancing()
@@ -28,7 +30,7 @@ int balancing()
 
 void printprofile(int x)
 {
-     printf("\nname=%s\naccount number=%d\nbalance=%d\naddress=%s\nmail=%s\ndob=%s\nphone=%d\naadhar=%d\n",user[x].name,x,user[x].balance,user[x].address,user[x].mail,user[x].dob,user[x].phone,user[x].aadhar);
+     printf("\nname=%s\naccount number=%d\nbalance=%d\naddress=%s\nmail=%s\ndob=%s\nphone=%d\naadhar=%d\nloan=%d",user[x].name,x,user[x].balance,user[x].address,user[x].mail,user[x].dob,user[x].phone,user[x].aadhar,user[x].loan);
 }
 
 int login()
@@ -53,10 +55,8 @@ int main()
     {
         start=balancing();
     }
-
     int upin,me,numb;
     upin=login();
-
     switch(upin)
     {
         case 0:
@@ -83,11 +83,9 @@ int main()
            printprofile(v);
            main();
            break;
-
         }
         case 1:
         {
-
             printf("log in\n");
             printf("enter account number\n");
             scanf("%d",&numb);
@@ -95,7 +93,6 @@ int main()
             char h[50],ch;
             int i;
             for(i=0;i<50;i++)
-
             {
                 ch=getch();
                 if(ch==13)
@@ -103,7 +100,6 @@ int main()
                 h[i]=ch;
                 ch='*';
                 printf("%c",ch);
-
             }
             h[i]='\0';
             int k=0,j;
@@ -131,10 +127,7 @@ int main()
                 printf("try again");
                 main();
             }
-
-
     }
-
     if(me==9)
     {
 notout:
@@ -170,26 +163,41 @@ notout:
                     printf("\nenter number of years for the repayement of loan");
                     scanf("%d",&years);
                     printf("\ninterest rate is 12 percent per annum\ntotal interest is %d\n",amount*years*12/100);
-                    printf("are you sure?(y/n)");
+                    printf("are you sure?(y/n)\n");
                     char sure;
                     sure=getch();
                     if(sure=='y')
                     {
                         user[numb].balance+=amount;
-                        printf("total amount of repayment is %d",amount+amount*years*12/100);
+                        user[numb].loan+=amount+amount*years*12/100;
+                        printf("total amount of repayment is %d\n",amount+amount*years*12/100);
                     }
 
                         goto notout;
-
-
-
                 }
             case 3:
                 {
+                    if(user[numb].loan<0)
+                    {
+                        user[numb].balance-=user[numb].loan;
+                        user[numb].loan=0;
+                    }
+                    if(user[numb].loan==0)
+                    {
                     printf("enter amount to be deposited");
                     scanf("%d",&amount);
                     user[numb].balance+=amount;
+
+                    }
+                    else if(user[numb].loan>0)
+                    {
+                        printf("loan needs to be repayed\n enter amount to be payed:");
+                        scanf("%d",&amount);
+                        user[numb].loan-=amount;
+                    }
+
                     goto notout;
+
                 }
             case 4:
                 {
@@ -254,8 +262,6 @@ notout:
                     }
                         }
                         goto notout;
-
-
                 }
             case 6:
                 {
@@ -265,15 +271,8 @@ notout:
                 {
                     goto notout;
                 }
-
-
-
         }
         }
-
-
-
     }
     main();
-
 }
