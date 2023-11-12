@@ -7,6 +7,14 @@ int accounts=0;
 
 int start=0;
 
+void welcome()
+{
+    for(int i=0;i<20;i++)
+    printf("*");
+    printf("\nwelcome to sdf bank\n");
+    for(int i=0;i<20;i++)
+    printf("*");
+}
 struct profile{
         char name[50];
         char address[100];
@@ -30,7 +38,7 @@ int balancing()
 
 void printprofile(int x)
 {
-     printf("\nname=%s\naccount number=%d\nbalance=%d\naddress=%s\nmail=%s\ndob=%s\nphone=%d\naadhar=%d\nloan=%d",user[x].name,x,user[x].balance,user[x].address,user[x].mail,user[x].dob,user[x].phone,user[x].aadhar,user[x].loan);
+     printf("\nname=%s\naccount number=%d\nbalance=%d\naddress=%s\nmail=%s\ndob=%s\nphone=%d\naadhar=%d\nloan=%d\n",user[x].name,x,user[x].balance,user[x].address,user[x].mail,user[x].dob,user[x].phone,user[x].aadhar,user[x].loan);
 }
 
 int login()
@@ -44,7 +52,7 @@ int login()
 int menu()
 {
     int x;
-    printf("\npress\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to withdraw funds\n5 to edit profile\n6 to logout");
+    printf("\npress\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to withdraw funds\n5 to edit profile\n6 to logout\n");
     scanf("%d",&x);
     return x;
 }
@@ -55,6 +63,7 @@ int main()
     {
         start=balancing();
     }
+    welcome();
     int upin,me,numb;
     upin=login();
     switch(upin)
@@ -117,14 +126,14 @@ int main()
             }
             else
             {
-                printf("wrong password");
+                printf("\nwrong account or password\n");
                 main();
             }
             break;
         }
         default:
             {
-                printf("try again");
+                printf("\ntry again\n");
                 main();
             }
     }
@@ -142,6 +151,8 @@ notout:
                     scanf("%d",&f);
                     printf("enter amount to be transfered");
                     scanf("%d",&amount);
+                    if(amount>=0)
+                    {
                     if(user[numb].balance-amount>=0)
                     {
                         user[numb].balance-=amount;
@@ -152,8 +163,12 @@ notout:
                     {
                         printf("not enough funds");
                     }
+                    }
+                    else
+                    {
+                        printf("amount cannot be negative");
+                    }
                     goto notout;
-
                 }
             case 2:
                 {
@@ -186,24 +201,37 @@ notout:
                     {
                     printf("enter amount to be deposited");
                     scanf("%d",&amount);
-                    user[numb].balance+=amount;
-
+                    if(amount>=0)
+                    {
+                         user[numb].balance+=amount;
+                    }
+                    else
+                    {
+                        printf("amount cannot be negative");
+                    }
                     }
                     else if(user[numb].loan>0)
                     {
                         printf("loan needs to be repayed\n enter amount to be payed:");
                         scanf("%d",&amount);
+                        if(amount>=0)
+                        {
                         user[numb].loan-=amount;
+                        }
+                        else
+                        {
+                        printf("amount cannot be negative");
+                        }
                     }
-
                     goto notout;
-
                 }
             case 4:
                 {
                     printf("enter amount to be withdrawn");
                     scanf("%d",&amount);
-                     if(user[numb].balance-amount>=0)
+                    if(amount>=0)
+                    {
+                         if(user[numb].balance-amount>=0)
                     {
                         user[numb].balance-=amount;
 
@@ -213,7 +241,11 @@ notout:
                     {
                         printf("\nnot enough funds");
                     }
-
+                    }
+                    else
+                    {
+                        printf("amount cannot be negative");
+                    }
                     goto notout;
                 }
             case 5:
@@ -222,7 +254,7 @@ notout:
                         {
                              printprofile(numb);
                     int edit;
-                    printf("\nto edit\npress\n1 for name\n2for address\n3 for mail\n4 for phone\n5 for password\n");
+                    printf("\nto edit\npress\n1 for name\n2 for address\n3 for mail\n4 for phone\n5 for password\n");
                     scanf("%d",&edit);
                     switch(edit)
                     {
