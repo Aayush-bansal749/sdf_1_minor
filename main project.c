@@ -38,7 +38,7 @@ int balancing()
 
 void printprofile(int x)
 {
-     printf("\nname=%s\naccount number=%d\nbalance=%d\naddress=%s\nmail=%s\ndob=%s\nphone=%d\naadhar=%d\nloan=%d\n",user[x].name,x,user[x].balance,user[x].address,user[x].mail,user[x].dob,user[x].phone,user[x].aadhar,user[x].loan);
+     printf("\nname=%s\naddress=%s\nphone=%d\nmail=%s\ndob=%s\naadhar=%d\nbalance=%d\nloan=%d\n",user[x].name,user[x].address,user[x].phone,user[x].mail,user[x].dob,user[x].aadhar,user[x].balance,user[x].loan);
 }
 
 int login()
@@ -143,11 +143,11 @@ int main()
         {
             int u,f,amount;
             u=menu();
-            switch (u)
+            switch(u)
             {
                 case 1:
                 {
-                    printf("enter account number to transfer fund to");
+                    printf("enter account number to transfer funds to");
                     scanf("%d",&f);
                     printf("enter amount to be transfered");
                     scanf("%d",&amount);
