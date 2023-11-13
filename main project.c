@@ -254,7 +254,7 @@ notout:
                         {
                              printprofile(numb);
                     int edit;
-                    printf("\nto edit\npress\n1 for name\n2 for address\n3 for mail\n4 for phone\n5 for password\n");
+                    printf("\nto edit\npress\n1 for name\n2 for address\n3 for mail\n4 for phone\n5 for password\n0 to exit\n");
                     scanf("%d",&edit);
                     switch(edit)
                     {
@@ -286,6 +286,10 @@ notout:
                             gets(user[numb].password);
                             gets(user[numb].password);
                             break;
+                        }
+                    case 0:
+                        {
+                            goto notout;
                         }
                     default:
                         {
