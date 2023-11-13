@@ -10,10 +10,10 @@ int start=0;
 void welcome()
 {
     for(int i=0;i<20;i++)
-    printf("*");
+        printf("*");
     printf("\nwelcome to sdf bank\n");
     for(int i=0;i<20;i++)
-    printf("*");
+        printf("*");
 }
 struct profile{
         char name[50];
@@ -52,7 +52,7 @@ int login()
 int menu()
 {
     int x;
-    printf("\npress\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to withdraw funds\n5 to edit profile\n6 to logout\n");
+    printf("\nmenu\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to withdraw funds\n5 to edit profile\n6 to logout\n");
     scanf("%d",&x);
     return x;
 }
@@ -70,12 +70,12 @@ int main()
     {
         case 0:
         {
-            accounts++;
-            int v=accounts-1;
+           accounts++;
+           int v=accounts-1;
            printf("sign in\n");
            printf("enter name\n");
            gets(user[v].name);
-            gets(user[v].name);
+           gets(user[v].name);
            printf("enter address\n");
            gets(user[v].address);
            printf("enter mail\n");
@@ -88,7 +88,7 @@ int main()
            scanf("%d",&user[v].aadhar);
            printf("create password:\n");
            gets(user[v].password);
-            gets(user[v].password);
+           gets(user[v].password);
            printprofile(v);
            main();
            break;
@@ -139,13 +139,13 @@ int main()
     }
     if(me==9)
     {
-notout:
+        notout:
         {
-        int u,f,amount;
-        u=menu();
-        switch (u)
-        {
-            case 1:
+            int u,f,amount;
+            u=menu();
+            switch (u)
+            {
+                case 1:
                 {
                     printf("enter account number to transfer fund to");
                     scanf("%d",&f);
@@ -153,16 +153,16 @@ notout:
                     scanf("%d",&amount);
                     if(amount>=0)
                     {
-                    if(user[numb].balance-amount>=0)
-                    {
-                        user[numb].balance-=amount;
-                        user[f].balance+=amount;
-                        printf("transfer successful");
-                    }
-                    else
-                    {
-                        printf("not enough funds");
-                    }
+                        if(user[numb].balance-amount>=0)
+                        {
+                            user[numb].balance-=amount;
+                            user[f].balance+=amount;
+                            printf("transfer successful");
+                        }
+                        else
+                        {
+                            printf("not enough funds");
+                        }
                     }
                     else
                     {
@@ -170,45 +170,46 @@ notout:
                     }
                     goto notout;
                 }
-            case 2:
+                case 2:
                 {
-                    printf("\nenter amount of loan required");
-                    scanf("%d",&amount);
-                    int years;
-                    printf("\nenter number of years for the repayement of loan");
-                    scanf("%d",&years);
-                    printf("\ninterest rate is 12 percent per annum\ntotal interest is %d\n",amount*years*12/100);
-                    printf("are you sure?(y/n)\n");
-                    char sure;
-                    sure=getch();
-                    if(sure=='y')
-                    {
-                        user[numb].balance+=amount;
-                        user[numb].loan+=amount+amount*years*12/100;
-                        printf("total amount of repayment is %d\n",amount+amount*years*12/100);
-                    }
-
-                        goto notout;
-                }
-            case 3:
-                {
-                    if(user[numb].loan<0)
-                    {
-                        user[numb].balance-=user[numb].loan;
-                        user[numb].loan=0;
-                    }
-                    if(user[numb].loan==0)
-                    {
-                    printf("enter amount to be deposited");
-                    scanf("%d",&amount);
-                    if(amount>=0)
-                    {
-                         user[numb].balance+=amount;
+                     printf("\nenter amount of loan required");
+                     scanf("%d",&amount);
+                     if(amount>=0)
+                     {
+                        int years;
+                        printf("\nenter number of years for the repayement of loan");
+                        scanf("%d",&years);
+                        printf("\ninterest rate is 12 percent per annum\ntotal interest is %d\n",amount*years*12/100);
+                        printf("are you sure?(y/n)\n");
+                        char sure;
+                        sure=getch();
+                        if(sure=='y')
+                        {
+                            user[numb].balance+=amount;
+                            user[numb].loan+=amount+amount*years*12/100;
+                            printf("total amount of repayment is %d\n",amount+amount*years*12/100);
+                        }
                     }
                     else
                     {
                         printf("amount cannot be negative");
                     }
+                    goto notout;
+                }
+                case 3:
+                {
+                    if(user[numb].loan==0)
+                    {
+                        printf("enter amount to be deposited");
+                        scanf("%d",&amount);
+                        if(amount>=0)
+                        {
+                            user[numb].balance+=amount;
+                        }
+                        else
+                        {
+                            printf("amount cannot be negative");
+                        }
                     }
                     else if(user[numb].loan>0)
                     {
@@ -216,31 +217,35 @@ notout:
                         scanf("%d",&amount);
                         if(amount>=0)
                         {
-                        user[numb].loan-=amount;
+                            user[numb].loan-=amount;
                         }
                         else
                         {
-                        printf("amount cannot be negative");
+                            printf("amount cannot be negative");
                         }
+                    }
+                    if(user[numb].loan<0)
+                    {
+                        user[numb].balance-=user[numb].loan;
+                        user[numb].loan=0;
                     }
                     goto notout;
                 }
-            case 4:
+                case 4:
                 {
                     printf("enter amount to be withdrawn");
                     scanf("%d",&amount);
                     if(amount>=0)
                     {
                          if(user[numb].balance-amount>=0)
-                    {
-                        user[numb].balance-=amount;
-
-                        printf("\ntransfer successful");
-                    }
-                    else
-                    {
-                        printf("\nnot enough funds");
-                    }
+                        {
+                            user[numb].balance-=amount;
+                            printf("\ntransfer successful");
+                        }
+                        else
+                        {
+                            printf("\nnot enough funds");
+                        }
                     }
                     else
                     {
@@ -248,66 +253,67 @@ notout:
                     }
                     goto notout;
                 }
-            case 5:
+                case 5:
                 {
                     editor:
-                        {
-                             printprofile(numb);
-                    int edit;
-                    printf("\nto edit\npress\n1 for name\n2 for address\n3 for mail\n4 for phone\n5 for password\n0 to exit\n");
-                    scanf("%d",&edit);
-                    switch(edit)
                     {
-                    case 1:
+                        printprofile(numb);
+                        int edit;
+                        printf("\nto edit\npress\n1 for name\n2 for address\n3 for mail\n4 for phone\n5 for password\n0 to exit\n");
+                        scanf("%d",&edit);
+                        switch(edit)
                         {
+                        case 1:
+                         {
                             gets(user[numb].name);
                             gets(user[numb].name);
                             break;
-                        }
-                    case 2:
-                        {
+                         }
+                        case 2:
+                         {
                             gets(user[numb].address);
                             gets(user[numb].address);
                             break;
-                        }
-                    case 3:
-                        {
+                         }
+                        case 3:
+                         {
                             gets(user[numb].mail);
-                             gets(user[numb].mail);
+                            gets(user[numb].mail);
                             break;
-                        }
-                    case 4:
-                        {
+                         }
+                        case 4:
+                         {
                             scanf("%d",&user[numb].phone);
                             break;
-                        }
-                    case 5:
-                        {
+                         }
+                        case 5:
+                         {
                             gets(user[numb].password);
                             gets(user[numb].password);
                             break;
-                        }
-                    case 0:
-                        {
+                         }
+                        case 0:
+                         {
                             goto notout;
-                        }
+
+                         }
                     default:
-                        {
+                         {
                             goto editor;
+                         }
                         }
                     }
-                        }
                         goto notout;
                 }
-            case 6:
+                case 6:
                 {
                     main();
                 }
-            default:
+                default:
                 {
                     goto notout;
                 }
-        }
+            }
         }
     }
     main();
