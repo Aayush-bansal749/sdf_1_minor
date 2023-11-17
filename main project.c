@@ -38,7 +38,7 @@ int balancing()
 
 void printprofile(int x)
 {
-     printf("\nname=%s\naddress=%s\nphone=%d\nmail=%s\ndob=%s\naadhar=%d\nbalance=%d\nloan=%d\n",user[x].name,user[x].address,user[x].phone,user[x].mail,user[x].dob,user[x].aadhar,user[x].balance,user[x].loan);
+     printf("\naccount number=%d\nname=%s\naddress=%s\nphone=%d\nmail=%s\ndob=%s\naadhar=%d\nbalance=%d\nloan=%d\n",x,user[x].name,user[x].address,user[x].phone,user[x].mail,user[x].dob,user[x].aadhar,user[x].balance,user[x].loan);
 }
 
 int login()
@@ -98,6 +98,11 @@ int main()
             printf("log in\n");
             printf("enter account number\n");
             scanf("%d",&numb);
+            if(numb>accounts-1)
+            {
+                printf("account does not exist\n");
+                main();
+            }
             printf("enter password\n");
             char h[50],ch;
             int i;
