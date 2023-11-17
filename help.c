@@ -67,15 +67,16 @@ int balancing()
     while(c!=accounts)
         {
             int d;
+            printf("%d",c);
             d=compare(username,c);
             if(d==0)
             {
-                return c;
+                printf("%d,%d",d,c);
                 break;
             }
             c++;
-        }
-            if(c=accounts)
+        }return c;
+         if(c=accounts)
             {
                 printf("username does not exist\n");
                 main();
@@ -96,9 +97,9 @@ int login()
     return x;
 }
 
-void deleter(int e)
+void deleter(int j)
 {
-    for(int j=e;j<accounts;j++)
+    for(int e=j;e<accounts;e++)
     {
         int i=0;
         while(user[e+1].mail[i]!='\0')
@@ -107,6 +108,7 @@ void deleter(int e)
             i++;
         }
         user[e].mail[i]='\0';
+        user[e+1].mail[0]='\0';
         i=0;
         while(user[e+1].address[i]!='\0')
         {
@@ -114,6 +116,7 @@ void deleter(int e)
             i++;
         }
         user[e].address[i]='\0';
+        user[e+1].address[0]='\0';
         i=0;
         while(user[e+1].name[i]!='\0')
         {
@@ -121,6 +124,7 @@ void deleter(int e)
             i++;
         }
         user[e].name[i]='\0';
+        user[e+1].name[0]='\0';
         i=0;
         while(user[e+1].username[i]!='\0')
         {
@@ -128,6 +132,7 @@ void deleter(int e)
             i++;
         }
         user[e].username[i]='\0';
+        user[e+1].username[0]='\0';
         i=0;
         while(user[e+1].dob[i]!='\0')
         {
@@ -135,6 +140,7 @@ void deleter(int e)
             i++;
         }
         user[e].dob[i]='\0';
+        user[e+1].dob[0]='\0';
         i=0;
         while(user[e+1].password[i]!='\0')
         {
@@ -142,10 +148,15 @@ void deleter(int e)
             i++;
         }
         user[e].password[i]='\0';
+        user[e+1].password[0]='\0';
         user[e].phone=user[e+1].phone;
+        user[e+1].phone=0;
         user[e].aadhar=user[e+1].aadhar;
+        user[e+1].aadhar=0;
         user[e].loan=user[e+1].loan;
+        user[e+1].loan=0;
         user[e].balance=user[e+1].balance;
+        user[e+1].balance=0;
         }
     accounts--;
     main();
@@ -201,7 +212,7 @@ int main()
         {
             printf("log in\n");
             numb=account_no();
-            printf("enter password");
+            printf("\n%denter password%s",numb,user[numb].password);
             char h[50],ch;
             int i;
             for(i=0;i<50;i++)
@@ -214,15 +225,9 @@ int main()
                 printf("%c",ch);
             }
             h[i]='\0';
-            int k=0,j;
-            for(j=0;j<i;j++)
-            {
-                if(h[j]==user[numb].password[j])
-                {
-                    k++;
-                }
-            }
-            if(k==i)
+            int k,j;
+            k=strcmp(h,user[numb].password);
+            if(k==0)
             {
                 printprofile(numb);
                 me=9;
@@ -250,7 +255,7 @@ int main()
             {
                 case 1:
                 {
-                    printf("enter user to transfer funds to");
+                    printf("enter user to transfer funds to\n");
                     f=account_no();
                     printf("enter amount to be transfered");
                     scanf("%d",&amount);
