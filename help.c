@@ -37,28 +37,50 @@ int balancing()
     return 1;
  }
 
+ int compare(char *ch,int e)
+ {
+     char *h=user[e].username;
+     int a;
+     while(*ch!='\0'&&*h!='\0')
+     {
+         if(*ch!=*h)
+         {
+             a=1;
+         }
+         ch++;h++;
+     }
+     if(*ch!='\0'||*h!='\0')
+        return 1;
+     if(a==0)
+        return 0;
+     else
+        return 1;
+ }
+
  int account_no()
  {
     printf("enter username\n");
     char username[50];
-    int c;
+    int c=0;
     gets(username);
     gets(username);
-    for(c=0;c<accounts;c++)
+    while(c!=accounts)
         {
             int d;
-            d=strcmp(username,user[c].username);
+            d=compare(username,c);
             if(d==0)
             {
+                return c;
                 break;
             }
+            c++;
+        }
             if(c=accounts)
             {
                 printf("username does not exist\n");
                 main();
             }
-        }
-        return c;
+
  }
 
 void printprofile(int x)
@@ -179,7 +201,7 @@ int main()
         {
             printf("log in\n");
             numb=account_no();
-            printf("enter password\n");
+            printf("enter password");
             char h[50],ch;
             int i;
             for(i=0;i<50;i++)
