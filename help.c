@@ -28,11 +28,19 @@ struct profile{
         int loan;
     }user[100];
 
+struct transactions
+{
+    int counter;
+    char payee[100][50];
+    int sent_amount[100];
+}payer[100];
+
 int balancing()
  {
     for(int i=0;i<100;i++)
     {
         user[i].balance=0;
+        payer[i].counter=0;
     }
     return 1;
  }
@@ -81,8 +89,7 @@ int balancing()
                 printf("username does not exist\n");
                 main();
             }
-
- }
+}
 
 void printprofile(int x)
 {
@@ -165,7 +172,7 @@ void deleter(int j)
 int menu()
 {
     int x;
-    printf("\nmenu\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to withdraw funds\n5 to edit profile\n6 to logout\n0 to delete\n");
+    printf("\nmenu\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to withdraw funds\n5 to edit profile\n6 to show transactions\n7 to logout\n0 to delete\n");
     scanf("%d",&x);
     return x;
 }
@@ -212,6 +219,7 @@ int main()
         {
             printf("log in\n");
             numb=account_no();
+
             printf("\n%denter password%s",numb,user[numb].password);
             char h[50],ch;
             int i;
@@ -265,6 +273,18 @@ int main()
                         {
                             user[numb].balance-=amount;
                             user[f].balance+=amount;
+                            if(payer[numb].counter==100)
+                            {
+                                for(int i=0;i<50;i++)
+                                {
+                                    payer[numb].sent_amount[i]=payer[numb].sent_amount[50+i];
+                                    strcpy(payer[numb].payee[i],payer[numb].payee[50+i]);
+                                }
+                                payer[numb].counter=50;
+                            }
+                            payer[numb].sent_amount[payer[numb].counter]=amount;
+                            strcpy(payer[numb].payee[payer[numb].counter],user[f].username);
+                            payer[numb].counter++;
                             printf("transfer successful");
                         }
                         else
@@ -348,7 +368,7 @@ int main()
                          if(user[numb].balance-amount>=0)
                         {
                             user[numb].balance-=amount;
-                            printf("\ntransfer successful");
+                            printf("\nwithdrawal successful");
                         }
                         else
                         {
@@ -417,11 +437,23 @@ int main()
                 }
                 case 6:
                 {
+                    printf("transaction list");
+                    for(int i=payer[numb].counter-1;i>=0;i--)
+                    {
+                        printf("\nyou payed %d rupees to %s",payer[numb].sent_amount[i],payer[numb].payee[i]);
+                    }
+                    goto notout;
+
+                }
+                case 7:
+                {
                     main();
+                    break;
                 }
                 case 0:
                 {
                     deleter(numb);
+                    break;
                 }
                 default:
                 {
