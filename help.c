@@ -75,8 +75,8 @@ int balancing()
     while(c!=accounts)
         {
             int d;
-            printf("%d",c);
-            d=compare(username,c);
+            printf("%d",c);  \\removing this printf makes the compare function stop working
+            d=compare(username,c);  \\i used strcmp before making a new fuction for this
             if(d==0)
             {
                 printf("%d,%d",d,c);
