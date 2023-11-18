@@ -26,6 +26,7 @@ struct profile{
         char password[50];
         int balance;
         int loan;
+        int fd;
     }user[100];
 
 struct transactions
@@ -34,16 +35,6 @@ struct transactions
     char payee[100][50];
     int sent_amount[100];
 }payer[100];
-
-int balancing()
- {
-    for(int i=0;i<100;i++)
-    {
-        user[i].balance=0;
-        payer[i].counter=0;
-    }
-    return 1;
- }
 
  int compare(char *ch,int e)
  {
@@ -75,8 +66,8 @@ int balancing()
     while(c!=accounts)
         {
             int d;
-            printf("%d",c);  \\removing this printf makes the compare function stop working
-            d=compare(username,c);  \\i used strcmp before making a new fuction for this
+            printf("%d",c);
+            d=compare(username,c);
             if(d==0)
             {
                 printf("%d,%d",d,c);
@@ -108,63 +99,9 @@ void deleter(int j)
 {
     for(int e=j;e<accounts;e++)
     {
-        int i=0;
-        while(user[e+1].mail[i]!='\0')
-        {
-            user[e].mail[i]=user[e+1].mail[i];
-            i++;
-        }
-        user[e].mail[i]='\0';
-        user[e+1].mail[0]='\0';
-        i=0;
-        while(user[e+1].address[i]!='\0')
-        {
-            user[e].address[i]=user[e+1].address[i];
-            i++;
-        }
-        user[e].address[i]='\0';
-        user[e+1].address[0]='\0';
-        i=0;
-        while(user[e+1].name[i]!='\0')
-        {
-            user[e].name[i]=user[e+1].name[i];
-            i++;
-        }
-        user[e].name[i]='\0';
-        user[e+1].name[0]='\0';
-        i=0;
-        while(user[e+1].username[i]!='\0')
-        {
-            user[e].username[i]=user[e+1].username[i];
-            i++;
-        }
-        user[e].username[i]='\0';
-        user[e+1].username[0]='\0';
-        i=0;
-        while(user[e+1].dob[i]!='\0')
-        {
-            user[e].dob[i]=user[e+1].dob[i];
-            i++;
-        }
-        user[e].dob[i]='\0';
-        user[e+1].dob[0]='\0';
-        i=0;
-        while(user[e+1].password[i]!='\0')
-        {
-            user[e].password[i]=user[e+1].password[i];
-            i++;
-        }
-        user[e].password[i]='\0';
-        user[e+1].password[0]='\0';
-        user[e].phone=user[e+1].phone;
-        user[e+1].phone=0;
-        user[e].aadhar=user[e+1].aadhar;
-        user[e+1].aadhar=0;
-        user[e].loan=user[e+1].loan;
-        user[e+1].loan=0;
-        user[e].balance=user[e+1].balance;
-        user[e+1].balance=0;
-        }
+       user[e]=user[e+1];
+    }
+
     accounts--;
     main();
 }
@@ -172,17 +109,13 @@ void deleter(int j)
 int menu()
 {
     int x;
-    printf("\nmenu\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to withdraw funds\n5 to edit profile\n6 to show transactions\n7 to logout\n0 to delete\n");
+    printf("\nmenu\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to open fixed deposits\n5 to withdraw funds\n6 to edit profile\n7 to show transactions\n8 to logout\n0 to delete\n");
     scanf("%d",&x);
     return x;
 }
 
 int main()
 {
-    if(start==0)
-    {
-        start=balancing();
-    }
     welcome();
     int upin,me,numb;
     upin=login();
@@ -361,6 +294,40 @@ int main()
                 }
                 case 4:
                 {
+                    printf("\nenter amount of fixed deposit");
+                     scanf("%d",&amount);
+                     if(amount>=0)
+                     {
+                        int years;
+                        printf("\nenter number of years for the fixed deposit");
+                        scanf("%d",&years);
+                        printf("\ninterest rate is 5 percent per annum\ntotal profit is %d\n",amount*years*5/100);
+                        printf("are you sure?(y/n)\n");
+                        char sure;
+                        sure=getch();
+                        if(sure=='y')
+                        {
+                            if(user[numb].balance-amount>=0)
+                            {
+                                user[numb].balance-=amount;
+                                user[numb].fd+=amount+amount*years*5/100;
+                                printf("total amount after the term is %d\nkeep the proof of fixed deposit safe",amount+amount*years*5/100);
+                            }
+                            else
+                            {
+                                printf("\nnot enough funds");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        printf("amount cannot be negative");
+                    }
+                    goto notout;
+
+                }
+                case 5:
+                {
                     printf("enter amount to be withdrawn");
                     scanf("%d",&amount);
                     if(amount>=0)
@@ -381,7 +348,7 @@ int main()
                     }
                     goto notout;
                 }
-                case 5:
+                case 6:
                 {
                     editor:
                     {
@@ -435,7 +402,7 @@ int main()
                     }
                         goto notout;
                 }
-                case 6:
+                case 7:
                 {
                     printf("transaction list");
                     for(int i=payer[numb].counter-1;i>=0;i--)
@@ -445,14 +412,22 @@ int main()
                     goto notout;
 
                 }
-                case 7:
+                case 8:
                 {
                     main();
                     break;
                 }
                 case 0:
                 {
-                    deleter(numb);
+                    printf("make sure to withdraw all your money before deleting account\nare you sure?(y/n)\n");
+                    char sure;
+                    sure=getch();
+                    if(sure=='y')
+                    {
+                        deleter(numb);
+                    }
+                    else
+                        goto notout;
                     break;
                 }
                 default:
