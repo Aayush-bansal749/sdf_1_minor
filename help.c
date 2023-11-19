@@ -5,8 +5,6 @@
 
 int accounts=0;
 
-int start=0;
-
 void welcome()
 {
     for(int i=0;i<20;i++)
