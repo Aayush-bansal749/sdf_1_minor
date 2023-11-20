@@ -68,16 +68,17 @@ struct transactions
             d=compare(username,c);
             if(d==0)
             {
-                printf("%d,%d",d,c);
                 break;
             }
             c++;
-        }return c;
-         if(c=accounts)
-            {
-                printf("username does not exist\n");
-                main();
-            }
+        }
+         if(c<accounts)
+        {
+            return c;
+        }
+        printf("username does not exist\n");
+        main();
+
 }
 
 void printprofile(int x)
