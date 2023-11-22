@@ -56,7 +56,7 @@ struct transactions
 
  int account_no()
  {
-    printf("enter username\n");
+    printf("\nenter username\n");
     char username[50];
     int c=0;
     gets(username);
@@ -89,7 +89,7 @@ void printprofile(int x)
 int login()
 {
     int x;
-    printf("\npress\n0 to sign up\n1 to log in\n");
+    printf("\npress\n0 to sign up\n1 to log in\n2 to logout\n");
     scanf("%d",&x);
     return x;
 }
@@ -102,10 +102,10 @@ void deleter(int j)
     }
 
     accounts--;
-    main();
+  main();
 }
 
-int menu()
+int admmenu()
 {
     int x;
     printf("\nmenu\n1 to transfer funds\n2 to take loan\n3 to deposit funds\n4 to open fixed deposits\n5 to withdraw funds\n6 to edit profile\n7 to show transactions\n8 to logout\n0 to delete\n");
@@ -113,12 +113,37 @@ int menu()
     return x;
 }
 
+int custmenu()
+{
+    int x;
+    printf("\nmenu\n1 to transfer funds\n2 to show transactions\n0 to logout\n");
+    scanf("%d",&x);
+    return x;
+}
+
 int main()
 {
     welcome();
-    int upin,me,numb;
-    upin=login();
-    switch(upin)
+
+    int choice;
+    int upin,me,re,numb;
+    char password[100];
+
+
+    printf("\nWelcome to the login system.\nPlease enter your choice:\n1. Admin Login\n2. Customer Login\n");
+    scanf("%d", &choice);
+    switch (choice)
+    {
+        case 1:
+            {
+            printf("Enter the admin password: ");
+            scanf("%s",&password);
+            if (strcmp(password, "admin123") == 0)
+            {
+                printf("Admin login successful.\n");
+                adm:
+                upin=login();
+                switch(upin)
     {
         case 0:
         {
@@ -144,7 +169,7 @@ int main()
            printf("create password:\n");
            gets(user[v].password);
            printprofile(v);
-           main();
+           goto adm;
            break;
         }
         case 1:
@@ -152,7 +177,7 @@ int main()
             printf("log in\n");
             numb=account_no();
 
-            printf("\n%denter password%s",numb,user[numb].password);
+            printf("\nenter password%s",user[numb].password);
             char h[50],ch;
             int i;
             for(i=0;i<50;i++)
@@ -175,14 +200,18 @@ int main()
             else
             {
                 printf("\nwrong password\n");
-                main();
+                goto adm;
             }
             break;
         }
+        case 2:
+            {
+                main();
+            }
         default:
             {
                 printf("\ntry again\n");
-                main();
+                goto adm;
             }
     }
     if(me==9)
@@ -190,7 +219,7 @@ int main()
         notout:
         {
             int u,f,amount;
-            u=menu();
+            u=admmenu();
             switch(u)
             {
                 case 1:
@@ -409,11 +438,10 @@ int main()
                         printf("\nyou payed %d rupees to %s",payer[numb].sent_amount[i],payer[numb].payee[i]);
                     }
                     goto notout;
-
                 }
                 case 8:
                 {
-                    main();
+                    goto adm;
                     break;
                 }
                 case 0:
@@ -436,5 +464,115 @@ int main()
             }
         }
     }
-    main();
+    goto adm;
+            }
+            else
+            {
+                printf("Wrong password. Please try again.\n");
+                main();
+            }
+            break;
+            }
+
+        case 2:
+            {
+
+                printf("\nsign in to your account");
+                int acc=account_no();
+
+                printf("\nenter password%s",user[acc].password);
+                char h[50],ch;
+                int i;
+            for(i=0;i<50;i++)
+            {
+                ch=getch();
+                if(ch==13)
+                break;
+                h[i]=ch;
+                ch='*';
+                printf("%c",ch);
+            }
+            h[i]='\0';
+            int k,j;
+            k=strcmp(h,user[acc].password);
+            if(k==0)
+            {
+                printprofile(acc);
+                re=9;
+            }
+            else
+            {
+                printf("\nwrong password\n");
+                main();
+            }
+            if(re==9)
+            {
+                 cust:
+                     {
+                         int r,f,amount;
+            r=custmenu();
+            switch(r)
+            {
+           case 1:
+            {
+                 printf("enter user to transfer funds to\n");
+                    f=account_no();
+                    printf("enter amount to be transfered");
+                    scanf("%d",&amount);
+                    if(amount>=0)
+                    {
+                        if(user[acc].balance-amount>=0)
+                        {
+                            user[acc].balance-=amount;
+                            user[f].balance+=amount;
+                            if(payer[acc].counter==100)
+                            {
+                                for(int i=0;i<50;i++)
+                                {
+                                    payer[acc].sent_amount[i]=payer[acc].sent_amount[50+i];
+                                    strcpy(payer[acc].payee[i],payer[acc].payee[50+i]);
+                                }
+                                payer[acc].counter=50;
+                            }
+                            payer[acc].sent_amount[payer[acc].counter]=amount;
+                            strcpy(payer[acc].payee[payer[acc].counter],user[f].username);
+                            payer[acc].counter++;
+                            printf("transfer successful");
+                        }
+                        else
+                        {
+                            printf("not enough funds");
+                        }
+                    }
+                    else
+                    {
+                        printf("amount cannot be negative");
+                    }
+                    goto cust;
+                }
+           case 2:
+            {
+                 printf("transaction list");
+                    for(int i=payer[acc].counter-1;i>=0;i--)
+                    {
+                        printf("\nyou payed %d rupees to %s",payer[acc].sent_amount[i],payer[acc].payee[i]);
+                    }
+                    goto cust;
+            }
+           case 0:
+            {
+                main();
+            }
+            }
+
+            }
+                 break;
+            }
+
+                     }
+
+        default:
+            printf("Invalid choice. Please enter a valid option.\n");
+            main();
+    }
 }
