@@ -172,7 +172,7 @@ int main()
             printf("LOG IN\n");
             numb=account_no();
 
-            printf("\nENTER PASSWORD%s",user[numb].password);
+            printf("\nENTER PASSWORD");
             char h[50],ch;
             int i;
             for(i=0;i<50;i++)
@@ -221,7 +221,7 @@ int main()
                 {
                     printf("ENTER USER TO TRANSFER FUNDS TO\n");
                     f=account_no();
-                    printf("ENTER AMOUNT TO BE TRANSFERRED");
+                    printf("\nENTER AMOUNT TO BE TRANSFERRED");
                     scanf("%d",&amount);
                     if(amount>=0)
                     {
@@ -475,7 +475,7 @@ int main()
                 printf("\nSIGN IN TO YOUR ACCOUNT");
                 int acc=account_no();
 
-                printf("\nENTER PASSWORD%s",user[acc].password);
+                printf("\nENTER PASSWORD");
                 char h[50],ch;
                 int i;
             for(i=0;i<50;i++)
@@ -512,7 +512,7 @@ int main()
             {
                     printf("ENTER USER TO TRANSFER FUNDS TO\n");
                     f=account_no();
-                    printf("ENTER AMOUNT TO BE TRANSFERRED TO");
+                    printf("\nENTER AMOUNT TO BE TRANSFERRED TO");
                     scanf("%d",&amount);
                     if(amount>=0)
                     {
