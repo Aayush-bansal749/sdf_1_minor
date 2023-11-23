@@ -11,6 +11,7 @@ void welcome()
         printf("\n\t\t\t\t\tWElCOME TO SDF BANK \n");
         for(int i=0;i<100;i++) printf("*");
 }
+
 struct profile{
         char username[50];
         char name[50];
@@ -119,12 +120,9 @@ int custmenu()
 int main()
 {
         welcome();
-
         int choice;
         int upin,me,re,numb;
         char password[100];
-
-
         printf("\nWELCOME TO THE LOGIN SYSTEM.\nPLEASE ENTER YOUR CHOICE :\n1. ADMIN LOGIN\n2. CUSTOMER LOGIN\n");
         scanf("%d", &choice);
         switch (choice)
@@ -171,7 +169,6 @@ int main()
         {
             printf("LOG IN\n");
             numb=account_no();
-
             printf("\nENTER PASSWORD");
             char h[50],ch;
             int i;
@@ -347,7 +344,6 @@ int main()
                             printf("AMOUNT CANNOT BE NEGATIVE");
                     }
                     goto notout;
-
                 }
                 case 5:
                 {
@@ -414,7 +410,6 @@ int main()
                          {
                             goto notout;
                             break;
-
                          }
                     default:
                          {
@@ -468,13 +463,10 @@ int main()
             }
             break;
             }
-
         case 2:
             {
-
                 printf("\nSIGN IN TO YOUR ACCOUNT");
                 int acc=account_no();
-
                 printf("\nENTER PASSWORD");
                 char h[50],ch;
                 int i;
@@ -559,13 +551,10 @@ int main()
                 main();
             }
             }
-
             }
                  break;
             }
-
                      }
-
         default:
             printf("INVALID CHOICE.\nPLEASE ENTER A VALID OPTION.\n");
             main();
