@@ -78,7 +78,7 @@ struct transactions
 
 void printprofile(int x)
 {
-        printf("\nNAME : %s\nADDRESS : %s\nPHONE : %d\nMAIL : %s\nDATE OF BIRTH : %s\nAADHAR : %d\nBALANCE : %d\nLOAN : %d\n",user[x].name,user[x].address,user[x].phone,user[x].mail,user[x].dob,user[x].aadhar,user[x].balance,user[x].loan);
+        printf("\nNAME : %s\nADDRESS : %s\nPHONE : %.0lf\nMAIL : %s\nDATE OF BIRTH : %s\nAADHAR : %d\nBALANCE : %d\nLOAN : %d\n",user[x].name,user[x].address,user[x].phone,user[x].mail,user[x].dob,user[x].aadhar,user[x].balance,user[x].loan);
 }
 
 int login()
@@ -155,7 +155,7 @@ int main()
            printf("ENTER DOB IN DD/MM/YYYY\n");
            gets(user[v].dob);
            printf("ENTER PHONE\n");
-           scanf("%0.lf",&user[v].phone);
+           scanf("%lf",&user[v].phone);
            printf("AADHAR\n");
            scanf("%d",&user[v].aadhar);
            printf("CREATE USERNAME:\n");
@@ -567,7 +567,7 @@ int main()
                      }
 
         default:
-            printf("INVALID CHOICE.PLEASE ENTER A VALID OPTION.\n");
+            printf("INVALID CHOICE.\nPLEASE ENTER A VALID OPTION.\n");
             main();
     }
 }
